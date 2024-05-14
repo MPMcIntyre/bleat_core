@@ -10,7 +10,7 @@ static GLOBAL_JVM: OnceCell<JavaVM> = OnceCell::new();
 pub fn init(env: &JNIEnv) -> crate::Result<()> {
     if let Ok(()) = GLOBAL_JVM.set(env.get_java_vm()?) {
         env.register_native_methods(
-            "com/nonpolynomial/btleplug/android/impl/Adapter",
+            "com/bleat/bleat_core/android/impl/Adapter",
             &[
                 NativeMethod {
                     name: "reportScanResult".into(),
@@ -24,33 +24,27 @@ pub fn init(env: &JNIEnv) -> crate::Result<()> {
                 },
             ],
         )?;
+        jni_utils::classcache::find_add_class(env, "com/bleat/bleat_core/android/impl/Peripheral")?;
+        jni_utils::classcache::find_add_class(env, "com/bleat/bleat_core/android/impl/ScanFilter")?;
         jni_utils::classcache::find_add_class(
             env,
-            "com/nonpolynomial/btleplug/android/impl/Peripheral",
+            "com/bleat/bleat_core/android/impl/NotConnectedException",
         )?;
         jni_utils::classcache::find_add_class(
             env,
-            "com/nonpolynomial/btleplug/android/impl/ScanFilter",
+            "com/bleat/bleat_core/android/impl/PermissionDeniedException",
         )?;
         jni_utils::classcache::find_add_class(
             env,
-            "com/nonpolynomial/btleplug/android/impl/NotConnectedException",
+            "com/bleat/bleat_core/android/impl/UnexpectedCallbackException",
         )?;
         jni_utils::classcache::find_add_class(
             env,
-            "com/nonpolynomial/btleplug/android/impl/PermissionDeniedException",
+            "com/bleat/bleat_core/android/impl/UnexpectedCharacteristicException",
         )?;
         jni_utils::classcache::find_add_class(
             env,
-            "com/nonpolynomial/btleplug/android/impl/UnexpectedCallbackException",
-        )?;
-        jni_utils::classcache::find_add_class(
-            env,
-            "com/nonpolynomial/btleplug/android/impl/UnexpectedCharacteristicException",
-        )?;
-        jni_utils::classcache::find_add_class(
-            env,
-            "com/nonpolynomial/btleplug/android/impl/NoSuchCharacteristicException",
+            "com/bleat/bleat_core/android/impl/NoSuchCharacteristicException",
         )?;
     }
     Ok(())
@@ -58,7 +52,7 @@ pub fn init(env: &JNIEnv) -> crate::Result<()> {
 
 pub fn global_jvm() -> &'static JavaVM {
     GLOBAL_JVM.get().expect(
-        "Droidplug has not been initialized. Please initialize it with btleplug::platform::init().",
+        "Droidplug has not been initialized. Please initialize it with bleat_core::platform::init().",
     )
 }
 

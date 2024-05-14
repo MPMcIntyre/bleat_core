@@ -1,4 +1,4 @@
-btleplug is covered under the following BSD-3-Clause license:
+bleat_core is covered under the following BSD-3-Clause license:
 
 Copyright (c) 2020-2021, Nonpolynomial
 All rights reserved.
@@ -14,7 +14,7 @@ met:
   notice, this list of conditions and the following disclaimer in the
   documentation and/or other materials provided with the distribution.
 
-* Neither the name of btleplug nor the names of its contributors may
+* Neither the name of bleat_core nor the names of its contributors may
   be used to endorse or promote products derived from this software
   without specific prior written permission.
 
@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ---
 
-Some parts of btleplug were forked from Rumble, which is dual-covered
+Some parts of bleat_core were forked from Rumble, which is dual-covered
 under the following MIT/Apache Licenses:
 
 Copyright (c) 2014 The Rust Project Developers
@@ -267,7 +267,7 @@ limitations under the License.
 
 ---
 
-Some parts of btleplug were forked from blurmac, which is covered
+Some parts of bleat_core were forked from blurmac, which is covered
 under the following BSD 3-Clause License:
 
 Copyright (c) 2017 Akos Kiss. All rights reserved.

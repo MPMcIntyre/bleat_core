@@ -1,4 +1,4 @@
-// btleplug Source Code File
+// bleat_core Source Code File
 //
 // Copyright 2020 Nonpolynomial Labs LLC. All rights reserved.
 //
@@ -11,7 +11,7 @@
 //
 // Copyright (c) 2014 The Rust Project Developers
 
-//! btleplug is a Bluetooth Low Energy (BLE) central module library for Rust.
+//! bleat_core is a Bluetooth Low Energy (BLE) central module library for Rust.
 //! It currently supports Windows 10, macOS (and possibly iOS) and Linux
 //! (BlueZ). Android support is planned for the future.
 //!
@@ -20,8 +20,8 @@
 //! An example of how to use the library to control some BLE smart lights:
 //!
 //! ```rust,no_run
-//! use btleplug::api::{bleuuid::uuid_from_u16, Central, Manager as _, Peripheral as _, ScanFilter, WriteType};
-//! use btleplug::platform::{Adapter, Manager, Peripheral};
+//! use bleat_core::api::{bleuuid::uuid_from_u16, Central, Manager as _, Peripheral as _, ScanFilter, WriteType};
+//! use bleat_core::platform::{Adapter, Manager, Peripheral};
 //! use rand::{Rng, thread_rng};
 //! use std::error::Error;
 //! use std::thread;
@@ -110,7 +110,7 @@ pub mod serde;
 #[cfg(target_os = "windows")]
 mod winrtble;
 
-/// The main error type returned by most methods in btleplug.
+/// The main error type returned by most methods in bleat_core.
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
     #[error("Permission denied")]
@@ -150,5 +150,5 @@ pub enum Error {
     Other(Box<dyn std::error::Error + Send + Sync>),
 }
 
-/// Convenience type for a result using the btleplug [`Error`] type.
+/// Convenience type for a result using the bleat_core [`Error`] type.
 pub type Result<T> = result::Result<T, Error>;

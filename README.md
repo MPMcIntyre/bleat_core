@@ -1,4 +1,6 @@
-# btleplug
+# bleat_core
+
+Originally forked from btleplug
 
 [![Crates.io Version](https://img.shields.io/crates/v/btleplug)](https://crates.io/crates/btleplug)
 [![docs.rs page](https://docs.rs/btleplug/badge.svg)](https://docs.rs/btleplug)

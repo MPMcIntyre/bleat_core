@@ -1,21 +1,21 @@
 [package]
-name = "btleplug"
-version = "0.11.5"
-authors = ["Nonpolynomial, LLC <kyle@nonpolynomial.com>"]
+name = "bleat_core"
+version = "0.12.0"
+authors = ["Michael <mpmcintyre@yahoo.com>"]
 license = "MIT/Apache-2.0/BSD-3-Clause"
-repository = "https://github.com/deviceplug/btleplug"
-homepage = "https://github.com/deviceplug/btleplug"
+repository = "https://github.com/MPMcintyre/bleat_core"
+homepage = "https://github.com/MPMcintyre/bleat_core"
 edition = "2021"
 description = """
 A Cross-Platform Rust Bluetooth Low Energy (BLE) GATT
-library.
+library. Forked from BtlePlug.
 """
 readme = "README.md"
 keywords = ["bluetooth", "BLE", "bluez", "uwp", "corebluetooth"]
 categories = ["hardware-support"]
 
 [lib]
-name = "btleplug"
+name = "bleat_core"
 path = "src/lib.rs"
 
 [features]
@@ -27,7 +27,9 @@ log = "0.4.20"
 bitflags = "2.4.1"
 thiserror = "1.0.53"
 uuid = "1.6.1"
-serde_cr = { package = "serde", version = "1.0.193", features = ["derive"], default-features = false, optional = true }
+serde_cr = { package = "serde", version = "1.0.193", features = [
+    "derive",
+], default-features = false, optional = true }
 serde_bytes = { version = "0.11.13", optional = true }
 dashmap = "5.5.3"
 futures = "0.3.30"
@@ -51,7 +53,15 @@ objc = "0.2.7"
 libc = "0.2.151"
 
 [target.'cfg(target_os = "windows")'.dependencies]
-windows = { version = "0.52.0", features = ["Devices_Bluetooth", "Devices_Bluetooth_GenericAttributeProfile", "Devices_Bluetooth_Advertisement", "Devices_Radios", "Foundation_Collections", "Foundation", "Storage_Streams"] }
+windows = { version = "0.56.0", features = [
+    "Devices_Bluetooth",
+    "Devices_Bluetooth_GenericAttributeProfile",
+    "Devices_Bluetooth_Advertisement",
+    "Devices_Radios",
+    "Foundation_Collections",
+    "Foundation",
+    "Storage_Streams",
+] }
 
 [dev-dependencies]
 rand = "0.8.5"

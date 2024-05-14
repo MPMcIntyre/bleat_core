@@ -17,6 +17,6 @@ pub fn init(env: &JNIEnv) -> crate::Result<()> {
 
 pub fn global_adapter() -> &'static adapter::Adapter {
     GLOBAL_ADAPTER.get().expect(
-        "Droidplug has not been initialized. Please initialize it with btleplug::platform::init().",
+        "Droidplug has not been initialized. Please initialize it with bleat_core::platform::init().",
     )
 }

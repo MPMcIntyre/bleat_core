@@ -1,4 +1,4 @@
-package com.nonpolynomial.btleplug.android.impl;
+package com.bleat.bleat_core.android.impl;
 
 class BluetoothException extends RuntimeException {
     public BluetoothException() {

@@ -67,7 +67,7 @@ impl From<[u8; 6]> for BDAddr {
     /// # Example
     ///
     /// ```
-    /// # use btleplug::api::BDAddr;
+    /// # use bleat_core::api::BDAddr;
     /// let addr: BDAddr = [0x2A, 0xCC, 0x00, 0x34, 0xFA, 0x00].into();
     /// assert_eq!("2A:CC:00:34:FA:00", addr.to_string());
     /// ```
@@ -233,7 +233,7 @@ pub mod serde {
     ///
     /// ```
     /// # use serde_cr as serde;
-    /// use btleplug::api::BDAddr;
+    /// use bleat_core::api::BDAddr;
     /// use serde::{Serialize, Deserialize};
     ///
     /// #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
@@ -294,13 +294,13 @@ pub mod serde {
     ///
     /// ```
     /// # use serde_cr as serde;
-    /// use btleplug::api::BDAddr;
+    /// use bleat_core::api::BDAddr;
     /// use serde::{Serialize, Deserialize};
     ///
     /// #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
     /// # #[serde(crate = "serde_cr")]
     /// struct S {
-    ///     #[serde(with = "btleplug::serde::bdaddr::no_delim")]
+    ///     #[serde(with = "bleat_core::serde::bdaddr::no_delim")]
     ///     addr: BDAddr,
     /// }
     ///
@@ -357,13 +357,13 @@ pub mod serde {
     ///
     /// ```
     /// # use serde_cr as serde;
-    /// use btleplug::api::BDAddr;
+    /// use bleat_core::api::BDAddr;
     /// use serde::{Serialize, Deserialize};
     ///
     /// #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
     /// # #[serde(crate = "serde_cr")]
     /// struct S {
-    ///     #[serde(with = "btleplug::serde::bdaddr::bytes")]
+    ///     #[serde(with = "bleat_core::serde::bdaddr::bytes")]
     ///     addr: BDAddr,
     /// }
     ///

@@ -43,11 +43,7 @@ impl Adapter {
     pub(crate) fn new() -> Result<Self> {
         let env = global_jvm().get_env()?;
 
-        let obj = env.new_object(
-            "com/nonpolynomial/btleplug/android/impl/Adapter",
-            "()V",
-            &[],
-        )?;
+        let obj = env.new_object("com/bleat/bleat_core/android/impl/Adapter", "()V", &[])?;
         let internal = env.new_global_ref(obj)?;
         let adapter = Self {
             manager: Arc::new(AdapterManager::default()),
@@ -142,7 +138,7 @@ impl Central for Adapter {
         env.call_method(
             &self.internal,
             "startScan",
-            "(Lcom/nonpolynomial/btleplug/android/impl/ScanFilter;)V",
+            "(Lcom/bleat/bleat_core/android/impl/ScanFilter;)V",
             &[filter.into()],
         )?;
         Ok(())

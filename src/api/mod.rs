@@ -1,4 +1,4 @@
-// btleplug Source Code File
+// bleat_core Source Code File
 //
 // Copyright 2020 Nonpolynomial Labs LLC. All rights reserved.
 //
@@ -11,14 +11,14 @@
 //
 // Copyright (c) 2014 The Rust Project Developers
 
-//! The `api` module contains the traits and types which make up btleplug's API. These traits have a
+//! The `api` module contains the traits and types which make up bleat_core's API. These traits have a
 //! different implementation for each supported platform, but only one implementation can be found
 //! on any given platform. These implementations are in the [`platform`](crate::platform) module.
 //!
 //! You will may want to import both the traits and their implementations, like:
 //! ```
-//! use btleplug::api::{Central, Manager as _, Peripheral as _};
-//! use btleplug::platform::{Adapter, Manager, Peripheral};
+//! use bleat_core::api::{Central, Manager as _, Peripheral as _};
+//! use bleat_core::platform::{Adapter, Manager, Peripheral};
 //! ```
 
 pub(crate) mod bdaddr;
@@ -367,8 +367,8 @@ pub trait Central: Send + Sync + Clone {
 ///
 /// ## Usage
 /// ```
-/// use btleplug::api::Manager as _;
-/// use btleplug::platform::Manager;
+/// use bleat_core::api::Manager as _;
+/// use bleat_core::platform::Manager;
 /// # use std::error::Error;
 ///
 /// # async fn example() -> Result<(), Box<dyn Error>> {

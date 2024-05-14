@@ -44,7 +44,7 @@ impl<'a: 'b, 'b> From<JPeripheral<'a, 'b>> for JObject<'a> {
 impl<'a: 'b, 'b> JPeripheral<'a, 'b> {
     pub fn from_env(env: &'b JNIEnv<'a>, obj: JObject<'a>) -> Result<Self> {
         //Self::from_env_impl(env, obj)
-        //let class = env.find_class("com/nonpolynomial/btleplug/android/impl/Peripheral")?;
+        //let class = env.find_class("com/bleat/bleat_core/android/impl/Peripheral")?;
         //Self::from_env_impl(env, obj, class)
         Self::from_env_impl(env, obj)
     }
@@ -52,7 +52,7 @@ impl<'a: 'b, 'b> JPeripheral<'a, 'b> {
     fn from_env_impl(env: &'b JNIEnv<'a>, obj: JObject<'a>) -> Result<Self> {
         //let class = env.auto_local(class);
         let class_static =
-            jni_utils::classcache::get_class("com/nonpolynomial/btleplug/android/impl/Peripheral")
+            jni_utils::classcache::get_class("com/bleat/bleat_core/android/impl/Peripheral")
                 .unwrap();
         let class = JClass::from(class_static.as_obj());
 
@@ -119,18 +119,16 @@ impl<'a: 'b, 'b> JPeripheral<'a, 'b> {
     }
 
     pub fn new(env: &'b JNIEnv<'a>, adapter: JObject<'a>, addr: BDAddr) -> Result<Self> {
-        // let class = env.find_class("com/nonpolynomial/btleplug/android/impl/Peripheral")?;
+        // let class = env.find_class("com/bleat/bleat_core/android/impl/Peripheral")?;
         let addr_jstr = env.new_string(format!("{:X}", addr))?;
         let obj = env.new_object(
             JClass::from(
-                jni_utils::classcache::get_class(
-                    "com/nonpolynomial/btleplug/android/impl/Peripheral",
-                )
-                .unwrap()
-                .as_obj(),
+                jni_utils::classcache::get_class("com/bleat/bleat_core/android/impl/Peripheral")
+                    .unwrap()
+                    .as_obj(),
             ),
             //class.as_obj(),
-            "(Lcom/nonpolynomial/btleplug/android/impl/Adapter;Ljava/lang/String;)V",
+            "(Lcom/bleat/bleat_core/android/impl/Adapter;Ljava/lang/String;)V",
             &[adapter.into(), addr_jstr.into()],
         )?;
         //Self::from_env_impl(env, obj, class)
@@ -525,11 +523,9 @@ impl<'a> JScanFilter<'a> {
         }
         let obj = env.new_object(
             JClass::from(
-                jni_utils::classcache::get_class(
-                    "com/nonpolynomial/btleplug/android/impl/ScanFilter",
-                )
-                .unwrap()
-                .as_obj(),
+                jni_utils::classcache::get_class("com/bleat/bleat_core/android/impl/ScanFilter")
+                    .unwrap()
+                    .as_obj(),
             ),
             //class.as_obj(),
             "([Ljava/lang/String;)V",

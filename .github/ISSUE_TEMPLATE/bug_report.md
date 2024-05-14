@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Problems with btleplug modules
+about: Problems with bleat_core modules
 title: ''
 labels: bug
 

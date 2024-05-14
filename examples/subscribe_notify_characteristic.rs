@@ -1,8 +1,8 @@
 // See the "macOS permissions note" in README.md before running this on macOS
 // Big Sur or later.
 
-use btleplug::api::{Central, CharPropFlags, Manager as _, Peripheral, ScanFilter};
-use btleplug::platform::Manager;
+use bleat_core::api::{Central, CharPropFlags, Manager as _, Peripheral, ScanFilter};
+use bleat_core::platform::Manager;
 use futures::stream::StreamExt;
 use std::error::Error;
 use std::time::Duration;

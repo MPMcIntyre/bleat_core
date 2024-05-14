@@ -67,7 +67,7 @@ fn get_poll_result<'a: 'b, 'b>(
                     cause,
                     JClass::from(
                         jni_utils::classcache::get_class(
-                            "com/nonpolynomial/btleplug/android/impl/NotConnectedException",
+                            "com/bleat/bleat_core/android/impl/NotConnectedException",
                         )
                         .unwrap()
                         .as_obj(),
@@ -78,7 +78,7 @@ fn get_poll_result<'a: 'b, 'b>(
                     cause,
                     JClass::from(
                         jni_utils::classcache::get_class(
-                            "com/nonpolynomial/btleplug/android/impl/PermissionDeniedException",
+                            "com/bleat/bleat_core/android/impl/PermissionDeniedException",
                         )
                         .unwrap()
                         .as_obj(),
@@ -89,7 +89,7 @@ fn get_poll_result<'a: 'b, 'b>(
                     cause,
                     JClass::from(
                         jni_utils::classcache::get_class(
-                            "com/nonpolynomial/btleplug/android/impl/UnexpectedCallbackException",
+                            "com/bleat/bleat_core/android/impl/UnexpectedCallbackException",
                         )
                         .unwrap()
                         .as_obj(),
@@ -100,7 +100,7 @@ fn get_poll_result<'a: 'b, 'b>(
                     cause,
                     JClass::from(
                         jni_utils::classcache::get_class(
-                            "com/nonpolynomial/btleplug/android/impl/UnexpectedCharacteristicException",
+                            "com/bleat/bleat_core/android/impl/UnexpectedCharacteristicException",
                         )
                         .unwrap()
                         .as_obj(),
@@ -111,23 +111,20 @@ fn get_poll_result<'a: 'b, 'b>(
                     cause,
                     JClass::from(
                         jni_utils::classcache::get_class(
-                            "com/nonpolynomial/btleplug/android/impl/NoSuchCharacteristicException",
+                            "com/bleat/bleat_core/android/impl/NoSuchCharacteristicException",
                         )
                         .unwrap()
                         .as_obj(),
                     ),
                 )? {
                     Ok(Err(Error::NoSuchCharacteristic))
-                } else if env.is_instance_of(
-                    cause,
-                    "java/lang/RuntimeException",
-                )? {
+                } else if env.is_instance_of(cause, "java/lang/RuntimeException")? {
                     let msg = env
                         .call_method(cause, "getMessage", "()Ljava/lang/String;", &[])
                         .unwrap()
                         .l()
                         .unwrap();
-                    let msgstr:String = env.get_string(msg.into()).unwrap().into();
+                    let msgstr: String = env.get_string(msg.into()).unwrap().into();
                     Ok(Err(Error::RuntimeError(msgstr)))
                 } else {
                     env.throw(ex)?;

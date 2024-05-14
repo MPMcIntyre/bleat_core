@@ -1,4 +1,4 @@
-// btleplug Source Code File
+// bleat_core Source Code File
 //
 // Copyright 2020 Nonpolynomial Labs LLC. All rights reserved.
 //

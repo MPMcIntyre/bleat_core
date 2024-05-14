@@ -1,10 +1,10 @@
 // See the "macOS permissions note" in README.md before running this on macOS
 // Big Sur or later.
 
-use btleplug::api::{
+use bleat_core::api::{
     bleuuid::uuid_from_u16, Central, Manager as _, Peripheral as _, ScanFilter, WriteType,
 };
-use btleplug::platform::{Adapter, Manager, Peripheral};
+use bleat_core::platform::{Adapter, Manager, Peripheral};
 use rand::{thread_rng, Rng};
 use std::error::Error;
 use std::time::Duration;

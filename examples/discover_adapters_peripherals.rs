@@ -5,8 +5,8 @@ use std::error::Error;
 use std::time::Duration;
 use tokio::time;
 
-use btleplug::api::{Central, Manager as _, Peripheral, ScanFilter};
-use btleplug::platform::Manager;
+use bleat_core::api::{Central, Manager as _, Peripheral, ScanFilter};
+use bleat_core::platform::Manager;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
