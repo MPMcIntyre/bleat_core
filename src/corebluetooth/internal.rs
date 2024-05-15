@@ -2,7 +2,6 @@
 //
 // Copyright 2024 Alt-Innovations. All rights reserved.
 
-
 //
 // Licensed under the BSD 3-Clause license. See LICENSE file in the project root
 // for full license information.
@@ -16,7 +15,7 @@ use super::{
         cb::{self, CBManagerAuthorization, CBPeripheralState},
         ns,
     },
-    future::{BtlePlugFuture, BtlePlugFutureStateShared},
+    future::{BleatCoreFuture, BleatCoreFutureStateShared},
     utils::{
         core_bluetooth::{cbuuid_to_uuid, uuid_to_cbuuid},
         nsstring::nsstring_to_string,
@@ -163,8 +162,8 @@ pub enum CBPeripheralEvent {
     Services(Vec<Uuid>, i16),
 }
 
-pub type CoreBluetoothReplyStateShared = BtlePlugFutureStateShared<CoreBluetoothReply>;
-pub type CoreBluetoothReplyFuture = BtlePlugFuture<CoreBluetoothReply>;
+pub type CoreBluetoothReplyStateShared = BleatCoreFutureStateShared<CoreBluetoothReply>;
+pub type CoreBluetoothReplyFuture = BleatCoreFuture<CoreBluetoothReply>;
 
 struct ServiceInternal {
     cbservice: StrongPtr,
