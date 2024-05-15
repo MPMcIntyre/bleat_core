@@ -26,7 +26,7 @@ use crate::{
 };
 use async_trait::async_trait;
 use dashmap::DashMap;
-use futures::stream::Stream;
+use futures::{executor::block_on, stream::Stream};
 use log::{trace, warn};
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
@@ -37,14 +37,16 @@ use std::{
     convert::TryInto,
     fmt::{self, Debug, Display, Formatter},
     pin::Pin,
-    sync::atomic::{AtomicBool, Ordering},
-    sync::{Arc, RwLock},
+    sync::{
+        atomic::{AtomicBool, Ordering},
+        Arc, RwLock,
+    },
 };
 use tokio::sync::broadcast;
 use uuid::Uuid;
 
 use std::sync::Weak;
-use windows::Devices::Bluetooth::{Advertisement::*, BluetoothAddressType};
+use windows::Devices::Bluetooth::{Advertisement::*, BluetoothAddressType, BluetoothLEDevice};
 
 #[cfg_attr(
     feature = "serde",
@@ -77,6 +79,7 @@ struct Shared {
     // Mutable, advertised, state...
     address_type: RwLock<Option<AddressType>>,
     local_name: RwLock<Option<String>>,
+    has_local_name: RwLock<Option<bool>>,
     last_tx_power_level: RwLock<Option<i16>>, // XXX: would be nice to avoid lock here!
     last_rssi: RwLock<Option<i16>>,           // XXX: would be nice to avoid lock here!
     latest_manufacturer_data: RwLock<HashMap<u16, Vec<u8>>>,
@@ -98,6 +101,7 @@ impl Peripheral {
                 notifications_channel: broadcast_sender,
                 address_type: RwLock::new(None),
                 local_name: RwLock::new(None),
+                has_local_name: RwLock::new(None),
                 last_tx_power_level: RwLock::new(None),
                 last_rssi: RwLock::new(None),
                 latest_manufacturer_data: RwLock::new(HashMap::new()),
@@ -131,6 +135,23 @@ impl Peripheral {
         }
     }
 
+    fn generate_unknown_name(&self, bt_address: u64) -> String {
+        let mac_string: String = format!("{:02x?}", bt_address)
+            .chars()
+            .enumerate()
+            .fold(String::new(), |mut acc, (i, c)| {
+                if i % 2 == 0 && i != 0 {
+                    acc.push(':');
+                }
+                acc.push(c);
+                acc
+            })
+            .chars()
+            .collect::<String>();
+        let unknown_name = format!("Bluetooth {}", mac_string);
+        return unknown_name;
+    }
+
     pub(crate) fn update_properties(&self, args: &BluetoothLEAdvertisementReceivedEventArgs) {
         let advertisement = args.Advertisement().unwrap();
 
@@ -143,8 +164,54 @@ impl Peripheral {
 
                 let mut local_name_guard = self.shared.local_name.write().unwrap();
                 *local_name_guard = Some(name.to_string());
+                let mut has_local_name_guard = self.shared.has_local_name.write().unwrap();
+                *has_local_name_guard = Some(true);
             }
         }
+
+        // Force read the name if it is not set yet
+        if self.shared.local_name.read().unwrap().is_none()
+            && self.shared.has_local_name.read().unwrap().is_none()
+        {
+            let future_name =
+                BluetoothLEDevice::FromBluetoothAddressAsync(args.BluetoothAddress().unwrap())
+                    .unwrap();
+            let result = block_on(future_name);
+            match result {
+                Ok(device) => {
+                    match device.Name() {
+                        Ok(d) => {
+                            let undefined_name =
+                                self.generate_unknown_name(args.BluetoothAddress().unwrap());
+
+                            if &d.to_string() != &undefined_name {
+                                let mut local_name_guard = self.shared.local_name.write().unwrap();
+                                *local_name_guard = Some(d.to_string());
+                                let mut has_local_name_guard =
+                                    self.shared.has_local_name.write().unwrap();
+                                *has_local_name_guard = Some(true);
+                            } else {
+                                let mut has_local_name_guard =
+                                    self.shared.has_local_name.write().unwrap();
+                                *has_local_name_guard = Some(false);
+                            }
+                        }
+                        _ => {
+                            let mut has_local_name_guard =
+                                self.shared.has_local_name.write().unwrap();
+                            *has_local_name_guard = Some(false);
+                            // could not get device name
+                        }
+                    }
+                }
+                Err(_) => {
+                    // could not get device name
+                    let mut has_local_name_guard = self.shared.has_local_name.write().unwrap();
+                    *has_local_name_guard = Some(false);
+                }
+            }
+        }
+
         if let Ok(manufacturer_data) = advertisement.ManufacturerData() {
             if manufacturer_data.Size().unwrap() > 0 {
                 let mut manufacturer_data_guard =
