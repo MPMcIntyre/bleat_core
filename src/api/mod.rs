@@ -175,8 +175,8 @@ impl Display for Descriptor {
 /// it.
 #[cfg_attr(
     feature = "serde",
-    serde(crate = "serde_cr"),
-    derive(Serialize, Deserialize)
+    derive(Serialize, Deserialize),
+    serde(crate = "serde_cr")
 )]
 #[derive(Debug, Default, Clone)]
 pub struct PeripheralProperties {
@@ -203,8 +203,8 @@ pub struct PeripheralProperties {
 
 #[cfg_attr(
     feature = "serde",
-    serde(crate = "serde_cr"),
-    derive(Serialize, Deserialize)
+    derive(Serialize, Deserialize),
+    serde(crate = "serde_cr")
 )]
 /// The filter used when scanning for BLE devices.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
@@ -302,8 +302,8 @@ pub trait Peripheral: Send + Sync + Clone + Debug {
 
 #[cfg_attr(
     feature = "serde",
-    serde(crate = "serde_cr"),
-    derive(Serialize, Deserialize)
+    derive(Serialize, Deserialize),
+    serde(crate = "serde_cr")
 )]
 #[derive(Debug, Clone)]
 pub enum CentralEvent {
